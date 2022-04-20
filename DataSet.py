@@ -63,10 +63,12 @@ class RawDataSet:
             if 'pred_col_idx' in kwargs.keys():
                 pred_col_idx = kwargs['pred_col_idx']
                 self.predict = loaded_arr[:, pred_col_idx]
-                self.feature = np.delete(loaded_arr, [target_col_idx, bias_col_idx, pred_col_idx], axis=1)
+                self.feature = np.delete(loaded_arr, [target_col_idx, pred_col_idx], axis=1)
+                self.feature_only = np.delete(loaded_arr, [bias_col_idx, target_col_idx, pred_col_idx], axis=1)
             else:
                 self.predict = np.zeros_like(loaded_arr[:, 0]) - 1  # [-1, -1, -1, ..., -1]
-                self.feature = np.delete(loaded_arr, [target_col_idx, bias_col_idx])
+                self.feature = np.delete(loaded_arr, [target_col_idx], axis=1)
+                self.feature_only = np.delete(loaded_arr, [bias_col_idx, target_col_idx], axis=1)
         #################################
 
         ##### CASE 2 : framed table #####
@@ -107,10 +109,12 @@ class RawDataSet:
             if 'pred_col_name' in kwargs.keys():
                 pred_col_name = kwargs['pred_col_name']
                 self.predict = converted_df.loc[:, pred_col_name].to_numpy()
-                self.feature = converted_df.drop(columns=[target_col_name, bias_col_name, pred_col_name]).to_numpy()
+                self.feature = converted_df.drop(columns=[target_col_name, pred_col_name]).to_numpy()
+                self.feature_only = converted_df.drop(columns=[bias_col_name, target_col_name, pred_col_name]).to_numpy()
             else:
                 self.predict = np.zeros_like(converted_df[target_col_name]) - 1  # [-1, -1, -1, ..., -1]
-                self.feature = converted_df.drop(columns=[target_col_name, bias_col_name]).to_numpy()
+                self.feature = converted_df.drop(columns=[target_col_name]).to_numpy()
+                self.feature_only = converted_df.drop(columns=[bias_col_name, target_col_name]).to_numpy()
 
         else:
             print("Input file : {}\t\t\tExtention : {}".format(filename, extention))
