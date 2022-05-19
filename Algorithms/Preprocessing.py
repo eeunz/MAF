@@ -3,9 +3,9 @@ from aif360.algorithms.preprocessing import LFR
 from aif360.algorithms.preprocessing import OptimPreproc
 from aif360.algorithms.preprocessing import Reweighing
 
-class Disperate_Impact_Remover(DisparateImpactRemover):
+class Disparate_Impact_Remover(DisparateImpactRemover):
     def __init__(self, rep_level=1.0, sensitive_attribute=''):
-        super(Disperate_Impact_Remover, self).__init__(repair_level=rep_level, sensitive_attribute=sensitive_attribute)
+        super(Disparate_Impact_Remover, self).__init__(repair_level=rep_level, sensitive_attribute=sensitive_attribute)
         
         
 class Learning_Fair_Representation(LFR):
