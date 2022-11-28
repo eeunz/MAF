@@ -251,6 +251,7 @@ class KDEmodel:
 
 		self.train_data = KDEDataset(X_train, y_train, z_train)
 		self.test_data = KDEDataset(X_test, y_test, z_test)
+		self.all_data = KDEDataset(rawdata.feature, rawdata.target, rawdata.bias)
 
 		# model setting
 		if model:
@@ -298,9 +299,12 @@ class KDEmodel:
 		print('Train model done.')
 
 
-	def evaluation(self):
+	def evaluation(self, all_data=False):
 		# setting dataloader
-		testloader = DataLoader(self.test_data, batch_size=self.batch_size, shuffle=False, drop_last=False)
+		if all_data:
+			testloader = DataLoader(self.all_data, batch_size=self.batch_size, shuffle=False, drop_last=False)
+		else:
+			testloader = DataLoader(self.test_data, batch_size=self.batch_size, shuffle=False, drop_last=False)
 
 		# model setting
 		self.model.eval()

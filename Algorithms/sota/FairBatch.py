@@ -88,6 +88,8 @@ class FairBatch(Sampler):
 
         # bias vector must be a binary vector (1: privileged value, 0: unprivileged value)
         bias = bias.ravel()
+        _, val2cls = mapping(bias)
+        bias = [val2cls[v] for v in bias]
 
         # input vector (feature + bias)
         #input_vec = np.column_stack((feature, bias))
@@ -192,7 +194,10 @@ class FairBatch(Sampler):
         yhat_yz = {}
         if self.fairness_type == 'eqopp':
             for yz in self.yz_items:
-                yhat_yz[yz] = float(torch.sum(eo_loss[self.yz_index[yz]])) / self.yz_len[yz]
+                if self.yz_len[yz] == 0:
+                    yhat_yz[yz] = 0
+                else:
+                    yhat_yz[yz] = float(torch.sum(eo_loss[self.yz_index[yz]])) / self.yz_len[yz]
 
             # re-calculate lb
             for i in range(len(self.lbs)):
@@ -203,13 +208,16 @@ class FairBatch(Sampler):
 
         elif self.fairness_type == 'eqodds':
             for yz in self.yz_items:
-                yhat_yz[yz] = float(torch.sum(eo_loss[self.yz_index[yz]])) / self.yz_len[yz]
+                if self.yz_len[yz] == 0:
+                    yhat_yz[yz] = 0
+                else:
+                    yhat_yz[yz] = float(torch.sum(eo_loss[self.yz_index[yz]])) / self.yz_len[yz]
 
             for y in self.y_items:
                 diff = yhat_yz[(y, 1)] - yhat_yz[(y, 0)]
                 base_diff = yhat_yz[(0, 1)] - yhat_yz[(0, 0)]
 
-                if abs(diff) > abd(base_diff):
+                if abs(diff) > abs(base_diff):
                     if diff > 0:
                         self.lbs[y] += self.alpha
                     else:
@@ -226,7 +234,10 @@ class FairBatch(Sampler):
 
             dp_loss = criterion(logit, ones_tensor)
             for yz in self.yz_items:
-                yhat_yz[yz] = float(torch.sum(dp_loss[self.yz_index[yz]])) / self.yz_len[yz]
+                if self.yz_len[yz] == 0:
+                    yhat_yz[yz] = 0
+                else:
+                    yhat_yz[yz] = float(torch.sum(dp_loss[self.yz_index[yz]])) / self.yz_len[yz]
 
             for y in self.y_items:
                 diff = yhat_yz[(y, 1)] - yhat_yz[(y, 0)]
@@ -312,11 +323,11 @@ def train(kaif_raw_dataset, batch_size, alpha, target_fairness, replacement=Fals
     # Caculate input size from raw dataset
     input_size = kaif_raw_dataset.feature.shape[-1]
 
+    # Mapping
+    cls2val, val2cls = mapping(kaif_raw_dataset.target)
+
     # Calculate the number of classes (output size) from raw dataset
     num_classes = len(np.unique(kaif_raw_dataset.target))
-
-    # Mapping target
-    cls2val, val2cls = mapping(kaif_raw_dataset.target)
 
     #model = nn.Linear(input_size, num_classes).to(device)
     model = nn.Sequential(
@@ -338,6 +349,8 @@ def train(kaif_raw_dataset, batch_size, alpha, target_fairness, replacement=Fals
     X_train, X_test, y_train, y_test, z_train, z_test = train_test_split(
         kaif_raw_dataset.feature, kaif_raw_dataset.target, kaif_raw_dataset.bias,
         test_size=0.2, random_state=seed)
+
+    #print(y_test)
 
     fb_ds_train = FairBatchDataset(X_train, y_train, z_train)
     fb_ds_test = FairBatchDataset(X_test, y_test, z_test)
@@ -367,8 +380,9 @@ def train(kaif_raw_dataset, batch_size, alpha, target_fairness, replacement=Fals
 
     print("\n" + "#"*10 + " Train finished " + "#"*10 + "\n")
 
-    ### Test on test dataset
-    logit = model(fb_ds_test.x)
+    ### Test on whole dataset (for metric)
+    feature = torch.Tensor(kaif_raw_dataset.feature).to(device)
+    logit = model(feature)
     prediction = torch.argmax(logit, dim=1)
 
     ### Convert prediction class to values for comparing original target

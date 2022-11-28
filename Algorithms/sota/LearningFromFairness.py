@@ -20,6 +20,25 @@ device = torch.device('cuda' if USE_CUDA else 'cpu')
 print("Train on [[[  {}  ]]] device.".format(device))
 
 
+class EMA:
+    
+    def __init__(self, label, alpha=0.9):
+        self.label = label
+        self.alpha = alpha
+        self.parameter = torch.zeros(label.size(0))
+        self.updated = torch.zeros(label.size(0))
+
+        
+    def update(self, data, index):
+        self.parameter[index] = self.alpha * self.parameter[index] + (1-self.alpha*self.updated[index]) * data
+        self.updated[index] = 1
+
+        
+    def max_loss(self, label):
+        label_index = np.where(self.label == label)[0]
+        return self.parameter[label_index].max()
+
+
 class MultiDimAverageMeter(object):
     def __init__(self, dims):
         self.dims = dims
@@ -66,18 +85,26 @@ class LfFDataset(Dataset):
 class MLP(nn.Module):
 	def __init__(self, num_classes, input_size):
 		super(MLP, self).__init__()
-		self.model = nn.Sequential(
+		self.feature = nn.Sequential(
 			nn.Linear(input_size, 100),
 			nn.ReLU(),
 			nn.Linear(100, 100),
 			nn.ReLU(),
 			nn.Linear(100, 100),
-			nn.ReLU(),
-			nn.Linear(100, num_classes))
+			nn.ReLU()
+		)
+		
+		self.classifier = nn.Linear(100, num_classes)
 
-	def forward(self, x):
-		img = x.view(x.size(0), -1) / 255
-		return self.model(x)
+	def forward(self, x, return_feat=False):
+		x = x.view(x.size(0), -1) / 255
+		feat = x = self.feature(x)
+		x = self.classifier(x)
+
+		if return_feat:
+			return x, feat
+		else:
+			return x
 
 
 class GeneralizedCELoss(nn.Module):
@@ -96,17 +123,31 @@ class GeneralizedCELoss(nn.Module):
 
 
 class LfFmodel:
-	def __init__(self, rawdata, n_epoch, batch_size, learning_rate, image_shape, train_size=0.8, seed=777):
+	def __init__(self, rawdata, n_epoch, batch_size, learning_rate, image_shape, attr_idx_list=[], train_size=0.8, seed=777):
 		# Data
 		train_X, test_X, train_y, test_y, train_z, test_z = train_test_split(
 			rawdata.feature_only, rawdata.target, rawdata.bias,
 			train_size=train_size, random_state=seed)
 
+		train_attr = np.column_stack((train_X[:, attr_idx_list], train_z.reshape(-1, 1), train_y.reshape(-1, 1)))
+		self.train_attr = torch.LongTensor(train_attr).to(device)
+		self.train_target_attr = self.train_attr[:, -1]
+		self.train_bias_attr = self.train_attr[:, -2]
+
+		test_attr = np.column_stack((test_X[:, attr_idx_list], test_z.reshape(-1, 1), test_y.reshape(-1, 1)))
+		self.test_attr = torch.LongTensor(test_attr).to(device)
+		self.test_target_attr = self.test_attr[:, -1]
+		self.test_bias_attr = self.test_attr[:, -2]
+
+		self.attr_dims = []
+		self.attr_dims.append(torch.max(self.train_target_attr).item() + 1)
+		self.attr_dims.append(torch.max(self.train_bias_attr).item() + 1)
+
 		self.train_dataset = LfFDataset(train_X, train_y, train_z)
 		self.test_dataset = LfFDataset(test_X, test_y, test_z)
 
-		self.train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
-		self.test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, drop_last=False)
+		self.train_loader = DataLoader(self.train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
+		self.test_loader = DataLoader(self.test_dataset, batch_size=batch_size, shuffle=False, drop_last=False)
 
 		self.batch_size = batch_size
 		self.n_epoch = n_epoch
@@ -135,6 +176,9 @@ class LfFmodel:
 		for ep in range(self.n_epoch):
 			self.model_b.train()
 			self.model_d.train()
+			
+			num_updated = 0
+
 			for idx, (X, y, z) in enumerate(self.train_loader):
 				sample_loss_ema_b = EMA(y, alpha=0.7)
 				sample_loss_ema_d = EMA(y, alpha=0.7)
@@ -148,6 +192,7 @@ class LfFmodel:
 				loss_per_sample_d = loss_d
 
 				index_arr = np.array(range(self.batch_size)) + idx
+				index_arr = np.where(index_arr < len(index_arr), index_arr, 0)
 
 				sample_loss_ema_b.update(loss_b, index_arr)
 				sample_loss_ema_d.update(loss_d, index_arr)
@@ -171,7 +216,7 @@ class LfFmodel:
 
 				loss = loss_b_update.mean() + loss_d_update.mean()
 
-				num_updated += loss_weight.mean().item() * data.size(0)
+				num_updated += loss_weight.mean().item() * X.size(0)
 
 				self.optimizer_b.zero_grad()
 				self.optimizer_d.zero_grad()
@@ -185,30 +230,34 @@ class LfFmodel:
 			valid_accs_d = torch.mean(valid_attrwise_accs_d)
 
 			print('Epoch {}/{} :  Loss {:.04f} | valid_accuracy_b {:.04f} | valid_accuracy_d {:.04f}'.format(
-				ep, n_epoch, loss, valid_accs_b, valid_accs_d))
+				ep, self.n_epoch, loss, valid_accs_b, valid_accs_d))
 		print("Training end")
 
 
 	def evaluate(self, model):
 		model.eval()
 		acc = 0
-		attrwise_acc_meter = MultiDimAverageMeter(attr_dims)
+		attrwise_acc_meter = MultiDimAverageMeter(self.attr_dims)
 		predict_list = []
 		label_list = []
 		bias_list = []
-		for idx, (X, y, z) in self.test_loader:
+		for idx, (X, y, z) in enumerate(self.test_loader):
 			with torch.no_grad():
 				logit = model(X)
 				pred = logit.data.max(1, keepdim=True)[1].squeeze(1)
-				correct = (pred == label).long()
+				correct = (pred == y).long()
 
 			label_list += list(y.numpy())
 			bias_list += list(z.numpy())
 			predict_list += list(pred.numpy())
 
-			attr = np.concatenate([y, z]).transpose()
+			attr = torch.LongTensor(np.column_stack((y.reshape(-1,1), z.reshape(-1,1)))).to(device)
+			#print(attr)
+			#print(correct)
+			#print(self.attr_dims)
 
 			attrwise_acc_meter.add(correct.cpu(), attr.cpu())
+			#attrwise_acc_meter.add(correct.cpu(), attr)
 
 		accs = attrwise_acc_meter.get_mean()
 
