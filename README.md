@@ -1,2 +1,2 @@
-# Kaif
+# MAF
 Korean AI Fairness
