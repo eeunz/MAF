@@ -1,2 +1,2 @@
 # MAF
-Korean AI Fairness
+MSIT AI Fair
