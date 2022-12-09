@@ -85,7 +85,7 @@ def mapping(class_vector):
 	cls2val = np.unique(class_vector)
 	val2cls = dict(zip(cls2val, range(len(cls2val))))
 
-	converted_vector = [val2cls[v] for v in class_vector]
+	converted_vector = [val2cls[int(v)] for v in class_vector]
 
 	return cls2val, val2cls, converted_vector
 

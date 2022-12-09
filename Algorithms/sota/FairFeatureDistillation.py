@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 import torch
 import torch.nn as nn
@@ -329,7 +330,7 @@ class FFD:
 
 				# print log
 				if idx % 10 == 0:
-					print('Epoch [{}/{}], Batch [{}/{}], Loss {}'.format(ep+1, n_epoch, idx, len(self.train_loader), loss))
+					print('Epoch [{}/{}], Batch [{}/{}], Loss {}'.format(ep+1, self.n_epoch, idx, len(self.train_loader), loss))
 
 		print('Train student end.')
 

@@ -30,10 +30,12 @@ class aifData(StandardDataset):
 
 
 class RawDataSet:
-    def __init__(self, filename, **kwargs):
-        # Detect file type
-        extention = os.path.splitext(filename)[-1]
-
+    def __init__(self, filename=None, **kwargs):
+        if filename:
+            # Detect file type
+            extention = os.path.splitext(filename)[-1]
+        else:
+            extention = ''
 
         ##### CASE 1 : numpy object #####
         if extention == '.npy':
@@ -117,8 +119,14 @@ class RawDataSet:
                 self.feature_only = converted_df.drop(columns=[bias_col_name, target_col_name]).to_numpy()
 
         else:
-            print("Input file : {}\t\t\tExtention : {}".format(filename, extention))
-            raise Exception("FILE ERROR!! Only [npy, csv, tsv] extention required.")
+            try:
+                self.feature = kwargs['x']
+                self.bias = kwargs['z']
+                self.target = kwargs['y']
+                self.feature_only = kwargs['x']
+            except:
+                print("Input file : {}\t\t\tExtention : {}".format(filename, extention))
+                raise Exception("FILE ERROR!! Only [npy, csv, tsv] extention required.")
 
 
     # Convert categorical values to numerical (integer) values on pandas.DataFrame
@@ -131,7 +139,7 @@ class RawDataSet:
             c2i = {}
             i = 0
             for c, f in categories.items():
-                i = i + 1
+                #i = i + 1
                 c2i[c] = i
 
             temp[cate] = temp[cate].map(lambda x: c2i[x])

@@ -1,10 +1,10 @@
-from aif360.algorithms.inprocessing import AdversarialDebiasing
+#from aif360.algorithms.inprocessing import AdversarialDebiasing
 from aif360.algorithms.inprocessing import GerryFairClassifier
 from aif360.algorithms.inprocessing import MetaFairClassifier
 from aif360.algorithms.inprocessing import PrejudiceRemover
 
-import tensorflow.compat.v1 as tf
-tf.disable_eager_execution()
+#import tensorflow.compat.v1 as tf
+#tf.disable_eager_execution()
 
 from aif360.algorithms.inprocessing.gerryfair.auditor import *
 from aif360.algorithms import Transformer
@@ -12,20 +12,20 @@ from aif360.algorithms.inprocessing.celisMeta import FalseDiscovery
 from aif360.algorithms.inprocessing.celisMeta import StatisticalRate
 
 
-class Adversarial_Debiasing(AdversarialDebiasing):
-    def __init__(self, unprivileged_groups, privileged_groups, 
-                 scope_name, sess, seed=None, 
-                 adversary_loss_weight=0.1, num_epochs=50, batch_size=128, classifier_num_hidden_units=200, debias=True):
-        super(Adversarial_Debiasing, self).__init__(unprivileged_groups=unprivileged_groups,
-                                                   privileged_groups=privileged_groups,
-                                                   scope_name=scope_name,
-                                                   sess=sess,
-                                                   seed=seed,
-                                                   adversary_loss_weight=adversary_loss_weight,
-                                                   num_epochs=num_epochs,
-                                                   batch_size=batch_size,
-                                                   classifier_num_hidden_units=classifier_num_hidden_units,
-                                                    debias=debias)
+#class Adversarial_Debiasing(AdversarialDebiasing):
+#    def __init__(self, unprivileged_groups, privileged_groups, 
+#                 scope_name, sess, seed=None, 
+#                 adversary_loss_weight=0.1, num_epochs=50, batch_size=128, classifier_num_hidden_units=200, debias=True):
+#        super(Adversarial_Debiasing, self).__init__(unprivileged_groups=unprivileged_groups,
+#                                                   privileged_groups=privileged_groups,
+#                                                   scope_name=scope_name,
+#                                                   sess=sess,
+#                                                   seed=seed,
+#                                                   adversary_loss_weight=adversary_loss_weight,
+#                                                   num_epochs=num_epochs,
+#                                                   batch_size=batch_size,
+#                                                   classifier_num_hidden_units=classifier_num_hidden_units,
+#                                                    debias=debias)
         
 class Gerry_Fair_Classifier(GerryFairClassifier):
     def __init__(self, C=10, printflag=False, heatmapflag=False, 

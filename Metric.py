@@ -87,7 +87,8 @@ class DataMetric:
         y = self.dataset.labels
 
         # learn a KNN on the features
-        nbrs = NearestNeighbors(n_neighbors, algorithm='ball_tree').fit(X)
+        #nbrs = NearestNeighbors(n_neighbors, algorithm='ball_tree').fit(X)
+        nbrs = NearestNeighbors().fit(X)
         _, indices = nbrs.kneighbors(X)
 
         # compute consistency score
@@ -96,7 +97,7 @@ class DataMetric:
             consistency += np.abs(y[i] - np.mean(y[indices[i]]))
         consistency = 1.0 - consistency/num_samples
 
-        return consistency
+        return consistency[0]
     
     def smoothed_base_rate(self, concentrate=1.0):
         num_classes = len(np.unique(self.dataset.labels))
@@ -238,12 +239,15 @@ class ClassificationMetric(DataMetric):
         num_pred_positives = conf_mat['TP'] + conf_mat['FP']
         num_instances = conf_mat['TP'] + conf_mat['FP'] + conf_mat['TN'] + conf_mat['FN']
         
-        return num_pred_positives / num_instances
+        if num_instances == 0:
+            return 0
+        else:
+            return num_pred_positives / num_instances
     
     def disparate_impact(self):
         denom = self.selection_rate(privileged=False)
         nom = self.selection_rate(privileged=True)
-        if not nom:
+        if nom == 0:
             return 0
         else:
             return denom / nom
