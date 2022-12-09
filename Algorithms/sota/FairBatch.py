@@ -386,10 +386,9 @@ def train(kaif_raw_dataset, batch_size, alpha, target_fairness, replacement=Fals
 def evaluation(model, dataset, cls2val):
     model.eval()
 
-    in_tensor = torch.Tensor(dataset.features)
+    test_ds = FairBatchDataset(dataset.feature, dataset.target, dataset.bias)
 
-    pred = model(in_tensor)
-    #print(pred)
+    pred = model(test_ds.x)
     pred = [cls2val[np.argmax(p)] for p in pred.cpu().detach().numpy()]
 
     return pred
