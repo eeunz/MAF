@@ -381,7 +381,7 @@ def train(kaif_raw_dataset, batch_size, alpha, target_fairness, replacement=Fals
     print("\n" + "#"*10 + " Train finished " + "#"*10 + "\n")
 
     return model, cls2val, val2cls
-
+    
 
 def evaluation(model, dataset, cls2val):
     model.eval()

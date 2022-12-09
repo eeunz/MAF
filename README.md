@@ -1,2 +1,2 @@
-# Kaif
-Korean AI Fairness
+# MAF
+MSIT AI Fair
