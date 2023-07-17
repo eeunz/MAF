@@ -1,13 +1,12 @@
 # MAF
-MSIT AI Fair
 
-MAF는 aif360 기반의 편향성 완화 프레임워크로 기계 학습 모델의 편향을 감지하고 완화할 수 있습니다. AIF360의 기본적인 기능을 포함하고 있으며, 컨소시엄에서 개발한 편향성 완화 알고리즘을 추가하여 확장 개발하고 있습니다. MAF 패키지는 Python에서 사용할 수 있습니다.
+MSIT AI Fair (MAF) is a bias mitigation framework based on aif360 that can detect and mitigate biases in machine learning models. It contains the basic features of AIF360, and it is being expanded by adding a bias mitigation algorithm developed by the consortium. The MAF package is available in Python.
 
 MAF package includes
 1. 
 
 
-우리는 확장성을 염두에 두고 패키지를 개발했습니다. 이 라이브러리는 아직 개발 중입니다. 메트릭, 설명자 및 편향성 제거 알고리즘의 기여를 권장합니다.
+We developed the package with scalability in mind. This library is still under development. We recommend contributions from metrics, descriptors, and deflection elimination algorithms.
 
 # Supported bias mitigation algorithms
 1. Fairness VAE
