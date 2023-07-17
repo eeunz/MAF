@@ -54,4 +54,4 @@ installing MAF, try this first.
 
 
 # Using MAF
-
+The example directory contains a collection of different jupyter notebooks that use MAF in different ways. Both the tutorial and the demo show the code that works using MAF. Tutorials provide additional discussions that guide you through various steps in your notebook.
