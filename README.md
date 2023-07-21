@@ -1,12 +1,12 @@
 # MAF
 
-MSIT AI Fair (MAF) is a bias mitigation framework based on aif360 that can detect and mitigate biases in machine learning models. It contains the basic features of AIF360, and it is being expanded by adding a bias mitigation algorithm developed by the consortium. The MAF package is available in Python.
+MAF is  a bias mitigation framework in AI algorithms.  MAF aims to mitigate the bias of unstructured data as well as structured data. MAF compares and analyzes the original and relaxed values to represent them in charts. We are expanding by adding a bias mitigation algorithm developed by the consortium, and the MAF package is available on Python. MSIT AI Fair (MAF) is a bias mitigation framework based on aif360 that can detect and mitigate biases in machine learning models. It contains the basic features of AIF360, and it is being expanded by adding a bias mitigation algorithm developed by the consortium. The MAF package is available in Python.
 
 # MAF package includes
-1. ddf
-2. dfsd
-3. f4sfds
-
+1. ## Pre-Processing Bias Mitigation
+Pre-processing techniques for deflection mitigation are very important. Certain characteristics of the training data can directly cause problems in the learned model. For this reason, many techniques for preprocessing focus on modifying training sets to overcome dataset imbalance versions. This can be achieved in a variety of ways, including resampling data rows, rebalancing data rows, inverting class labels between groups, and omitting critical variables or proxies. By modifying the training data in this way, the output of the learned classifier will be less biased.
+3. In-Processing Bias Mitigation
+4. Post-Processing Bias Mitigation
 
 We developed the package with scalability in mind. This library is still under development. We recommend contributions from metrics, descriptors, and deflection elimination algorithms.
 
