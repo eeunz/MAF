@@ -10,11 +10,17 @@ The MAF package includes
 We developed the package with scalability in mind. This library is still under development. We recommend contributions from metrics, descriptors, and deflection elimination algorithms.
 
 # Supported bias mitigation algorithms
-1. Fairness VAE
-2. Fair feature distillation
-3. Learning from fairness
-4. Kernel density estimation
-5. FairBatch
+1. Disparate_Impact_Remover
+2. Learning_Fair_Representation
+3. Reweighing
+4. Gerry_Fair_Classifier
+5. Meta_Fair_Classifier
+6. Prejudice_Remover
+7. FairBatch
+8. FairFeatureDistillation(Image only)
+9. FairnessVAE(Image only)
+10. KernelDensityEstimator
+11. LearningFromFairness(Image only)
 
 # Algorithms to add
 1. fair-manifold-pca
@@ -24,10 +30,10 @@ We developed the package with scalability in mind. This library is still under d
 
 
 # Supported fairness metrics
-Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
-In-Processing Bias Mitigation : Gerry_Fair_Classifier, Meta_Fair_Classifier, Prejudice_Remover
-Post-Processing Bias Mitigation : Calibrated_EqOdds, EqualizedOdds, RejectOption
-Sota : FairBatch, FairFeatureDistillation(Image only), FairnessVAE(Image only), KernelDensityEstimator, LearningFromFairness(Image only)
+* Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
+* In-Processing Bias Mitigation : Gerry_Fair_Classifier, Meta_Fair_Classifier, Prejudice_Remover
+* Post-Processing Bias Mitigation : Calibrated_EqOdds, EqualizedOdds, RejectOption
+* Sota : FairBatch, FairFeatureDistillation(Image only), FairnessVAE(Image only), KernelDensityEstimator, LearningFromFairness(Image only)
 
 
 # Setup
