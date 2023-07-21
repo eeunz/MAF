@@ -26,10 +26,10 @@ We developed the package with scalability in mind. This library is still under d
 
 
 # Supported fairness metrics
-## 1. Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
-## 2. In-Processing Bias Mitigation : Gerry_Fair_Classifier, Meta_Fair_Classifier, Prejudice_Remover
-## 3. Post-Processing Bias Mitigation : Calibrated_EqOdds, EqualizedOdds, RejectOption
-## 4. Sota : FairBatch, FairFeatureDistillation, FairnessVAE, KernelDensityEstimator, LearningFromFairness
+Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
+In-Processing Bias Mitigation : Gerry_Fair_Classifier, Meta_Fair_Classifier, Prejudice_Remover
+Post-Processing Bias Mitigation : Calibrated_EqOdds, EqualizedOdds, RejectOption
+Sota : FairBatch, FairFeatureDistillation, FairnessVAE, KernelDensityEstimator, LearningFromFairness
 
 
 # Setup
