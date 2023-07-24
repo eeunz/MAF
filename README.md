@@ -24,7 +24,7 @@ MAF 패키지에는 다음이 포함됩니다
 
 # Algorithms to add
 1. fair-manifold-pca
-2. 
+2. (추가할 알고리즘 작성 예정)
 3. 
 4. 
 
