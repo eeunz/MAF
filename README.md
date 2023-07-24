@@ -41,31 +41,29 @@ Supported Python Configurations:
 
 | OS      | Python version |
 | ------- | -------------- |
-| macOS   | 3.7 – 3.10     |
-| Ubuntu  | 3.7 – 3.10     |
-| Windows | 3.7 – 3.10     |
+| macOS   | 3.8 – 3.11     |
+| Ubuntu  | 3.8 – 3.11     |
+| Windows | 3.8 – 3.11     |
 
 ### (Optional) Create a virtual environment
 
 MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 가상 환경 관리자를 사용하는 것이 좋습니다. MAF를 설치하는 데 문제가 있으면 먼저 이것을 시도하십시오.
 
-Then, to create a new Python 3.7 environment, run:
-
+그런 다음 새 Python 3.11 환경을 만들려면 다음을 실행합니다.
 ```bash
-conda create --name MAF python=3.7
+conda create --name MAF python=3.11
 conda activate MAF
 ```
 
-The shell should now look like `(MAF) $`. To deactivate the environment, run:
-
+셸은 이제 (MAF) $처럼 보일 것입니다. 환경을 비활성화하려면 다음을 실행합니다.
 ```bash
 (MAF)$ conda deactivate
 ```
+prompt가 $로 돌아갑니다.
 
-The prompt will return to `$ `.
 
 ### Install with `pip`
-To install the latest stable version from PyPI, run:
+PyPI에서 최신 안정 버전을 설치하려면 다음을 실행하십시오.
 
 ```bash
 pip install MAF
@@ -73,7 +71,7 @@ pip install MAF
 
 ### Manual installation
 
-Clone the latest version of this repository:
+이 repository의 최신 버전을 복제합니다.
 
 ```bash
 git clone https://github.com/konanaif/MAF.git
