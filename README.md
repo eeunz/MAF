@@ -64,12 +64,7 @@ The shell should now look like `(MAF) $`. To deactivate the environment, run:
 
 The prompt will return to `$ `.
 
-Note: Older versions of conda may use `source activate MAF` and `source
-deactivate` (`activate MAF` and `deactivate` on Windows).
-
-
 ### Install with `pip`
-
 To install the latest stable version from PyPI, run:
 
 ```bash
@@ -84,7 +79,5 @@ Clone the latest version of this repository:
 git clone https://github.com/konanaif/MAF.git
 ```
 
-
-
 # Using MAF
-example.ipynb is an example of how you can use MAF in different ways.
+example.ipynb는 MAF를 다양한 방식으로 사용할 수 있는 예입니다.
