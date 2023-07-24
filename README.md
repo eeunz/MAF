@@ -54,7 +54,7 @@ conda create --name MAF python=3.11
 conda activate MAF
 ```
 
-셸은 이제 (MAF) $처럼 보일 것입니다. 환경을 비활성화하려면 다음을 실행합니다.
+shell은 이제 (MAF) $처럼 보일 것입니다. 환경을 비활성화하려면 다음을 실행합니다.
 ```bash
 (MAF)$ conda deactivate
 ```
