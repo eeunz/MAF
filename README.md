@@ -24,10 +24,9 @@ MAF 패키지에는 다음이 포함됩니다
 
 # Algorithms to add
 1. fair-manifold-pca
-2. ~ 
-3. ~
-4. ~
-
+2. 
+3. 
+4. 
 
 # Supported fairness metrics
 * Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
