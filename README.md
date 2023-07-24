@@ -46,35 +46,4 @@ Supported Python Configurations:
 
 ### (Optional) Create a virtual environment
 
-MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 가상 환경 관리자를 사용하는 것이 좋습니다. MAF를 설치하는 데 문제가 있으면 먼저 이것을 시도하십시오.
-
-그런 다음 새 Python 3.11 환경을 만들려면 다음을 실행합니다.
-```bash
-conda create --name MAF python=3.11
-conda activate MAF
-```
-
-shell은 이제 (MAF) $처럼 보일 것입니다. 환경을 비활성화하려면 다음을 실행합니다.
-```bash
-(MAF)$ conda deactivate
-```
-prompt가 $로 돌아갑니다.
-
-
-### Install with `pip`
-PyPI에서 최신 안정 버전을 설치하려면 다음을 실행하십시오.
-
-```bash
-pip install MAF
-```
-
-### Manual installation
-
-이 repository의 최신 버전을 복제합니다.
-
-```bash
-git clone https://github.com/konanaif/MAF.git
-```
-
-# Using MAF
-example.ipynb는 MAF를 다양한 방식으로 사용할 수 있는 예입니다.
+MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 가상 환경 관리자를 사용하는 것이 좋습니다제입니다.
