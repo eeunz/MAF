@@ -46,7 +46,7 @@ Supported Python Configurations:
 
 ### (Optional) Create a virtual environment
 
-MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 가상 환경 관리자를 사용하는 것이 좋습니다제입니다.
+MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 anaconda 가상 환경을 사용하는 것이 좋습니다.
 
 ### Install with pip
 PyPI에서 최신 버전을 설치하려면 다음을 실행하세요.
