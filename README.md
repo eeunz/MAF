@@ -14,7 +14,7 @@ MAF 패키지에는 다음이 포함됩니다
    
 지속적인 확장 가능성을 두고 패키지를 개발했으며, 이 프레임워크는 개발 진행중입니다.
 
-# bias mitigation algorithms
+# Bias mitigation algorithms
 MAF는 AIF360의 workflow를 차용했으므로, 처리 과정은 Pre/In/Post Processing의 3단계를 가집니다.
 
 ### Pre-Processing Algorithms
