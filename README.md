@@ -18,15 +18,25 @@ MAF 패키지에는 다음이 포함됩니다
 MAF는 AIF360의 workflow를 차용했으므로, 처리 과정은 Pre/In/Post Processing의 3단계를 가집니다.
 
 ### Pre-Processing Algorithms
- * Disparate_Impact_Remover(From AIF360), Learning_Fair_Representation(From AIF360), Reweighing(From AIF360)
+* Disparate_Impact_Remover(From AIF360)
+* Learning_Fair_Representation(From AIF360)
+* Reweighing(From AIF360)
 ### In-Processing Algorithms
- * Gerry_Fair_Classifier(From AIF360), Meta_Fair_Classifier(From AIF360), Prejudice_Remover(From AIF360)
+* Gerry_Fair_Classifier(From AIF360)
+* Meta_Fair_Classifier(From AIF360)
+* Prejudice_Remover(From AIF360)
 ### Post-Processing Algorithms
- *Calibrated_EqOdds(From AIF360), EqualizedOdds(From AIF360), RejectOption(From AIF360)
+* Calibrated_EqOdds(From AIF360)
+* EqualizedOdds(From AIF360)
+* RejectOption(From AIF360)
 ### Sota Algorithms
- *FairBatch, FairFeatureDistillation(Image only), FairnessVAE(Image only), KernelDensityEstimator, LearningFromFairness(Image only)
+* FairBatch
+* FairFeatureDistillation(Image only)
+* FairnessVAE(Image only)
+* KernelDensityEstimator
+* LearningFromFairness(Image only)
 
-# Algorithms to add
+### Algorithms to add
 fair-manifold-pca
 
 
