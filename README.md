@@ -50,7 +50,8 @@ MAF는 AIF360의 workflow를 차용했으므로, 처리 과정은 Pre/In/Post Pr
 * Statistical parity difference
 * Consistency
 ### Classification metrics
-* Error rate, Average odds difference
+* Error rate
+* Average odds difference
 * Average abs odds difference
 * Selection rate
 * Disparate impact
