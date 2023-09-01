@@ -6,39 +6,35 @@ MAF는 데이터 편향성과 알고리즘 편향성을 측정 및 완화하는 
 
 MAF 패키지는 python 환경에서 사용할 수 있습니다.
 
-
 MAF 패키지에는 다음이 포함됩니다
 1. 편향성을 테스트할 데이터 세트
 2. 모델에 대한 메트릭 세트 및 메트릭에 대한 설명
-3. 데이터 세트 및 모델의 편향을 완화하는 알고리즘. 연구소의 알고리즘 연구를 음성, 언어, 금융, 의뢰 시스템, 의료, 채용, 치안, 광고, 법률, 문화, 방송 등 광범위한 분야에서 활용하기 위해 설계되었습니다. 
+3. 데이터 세트 및 모델의 편향을 완화하는 알고리즘
+ * 연구소의 알고리즘 연구를 음성, 언어, 금융, 의뢰 시스템, 의료, 채용, 치안, 광고, 법률, 문화, 방송 등 광범위한 분야에서 활용하기 위해 설계되었습니다.
+   
+지속적인 확장 가능성을 두고 패키지를 개발했으며, 이 프레임워크는 개발 진행중입니다.
 
-우리는 확장성을 염두에 두고 패키지를 개발했습니다. 이 라이브러리는 개발 진행중입니다.
 
-# Supported bias mitigation algorithms
-1. Disparate_Impact_Remover
-2. Learning_Fair_Representation
-3. Reweighing
-4. Gerry_Fair_Classifier
-5. Meta_Fair_Classifier
-6. Prejudice_Remover
-7. FairBatch
-8. FairFeatureDistillation(Image only)
-9. FairnessVAE(Image only)
-10. KernelDensityEstimator
-11. LearningFromFairness(Image only)
+MAF는 AIF360의 workflow를 차용했으므로, 처리 과정은 Pre/In/Post Processing의 3단계를 가집니다.
+
+# Pre-Processing Algorithms
+Disparate_Impact_Remover(From AIF360), Learning_Fair_Representation(From AIF360), Reweighing(From AIF360)
+# In-Processing Algorithms
+Gerry_Fair_Classifier(From AIF360), Meta_Fair_Classifier(From AIF360), Prejudice_Remover(From AIF360)
+# Post-Processing Algorithms
+Calibrated_EqOdds(From AIF360), EqualizedOdds(From AIF360), RejectOption(From AIF360)
+# Sota Algorithms
+FairBatch, FairFeatureDistillation(Image only), FairnessVAE(Image only), KernelDensityEstimator, LearningFromFairness(Image only)
 
 # Algorithms to add
-1. fair-manifold-pca
-2. (추가할 알고리즘 작성 예정)
-3. 
-4. 
+fair-manifold-pca
+
 
 # Supported fairness metrics
-* Pre-Processing Bias Mitigation : Disparate_Impact_Remover, Learning_Fair_Representation, Reweighing
-* In-Processing Bias Mitigation : Gerry_Fair_Classifier, Meta_Fair_Classifier, Prejudice_Remover
-* Post-Processing Bias Mitigation : Calibrated_EqOdds, EqualizedOdds, RejectOption
-* Sota : FairBatch, FairFeatureDistillation(Image only), FairnessVAE(Image only), KernelDensityEstimator, LearningFromFairness(Image only)
-
+* Data metrics
+  * Number of nagatives (privileged), 	Number of positives (privileged), Number of negatives (unprivileged), Number of positives (unprivileged), Base rate, Statistical parity difference, Consistency
+* Classification metrics
+  * Error rate, Average odds difference, Average abs odds difference, Selection rate, Disparate impact, Statistical parity difference, Generalized entropy index, Theil index, Equal opportunity difference
 
 # Setup
 Supported Python Configurations:
@@ -50,22 +46,12 @@ Supported Python Configurations:
 | Windows | 3.8 – 3.11     |
 
 ### (Optional) Create a virtual environment
-
 MAF에는 시스템의 다른 프로젝트와 충돌할 수 있는 많은 Python 패키지의 특정 버전이 필요합니다. 종속성이 안전하게 설치되도록 하려면 anaconda 가상 환경을 사용하는 것이 좋습니다.
 
-### Install with pip
-PyPI에서 최신 버전을 설치하려면 다음을 실행하세요.
-
-```bash
-pip install maf
-```
 
 ### Install with pip
 이 저장소의 최신 버전을 복제합니다.
 ```bash
-git clone https://github.com/.../maf
+git clone https://github.com/konanaif/MAF.git
 ```
-
-### Using MAF
-예제 디렉터리에는 MAF를 다양한 방식으로 사용하는 다양한 jupyter 노트북이 포함되어 있습니다. 
 
