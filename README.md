@@ -41,10 +41,23 @@ fair-manifold-pca
 
 
 # Supported fairness metrics
-* Data metrics
-  * Number of nagatives (privileged), 	Number of positives (privileged), Number of negatives (unprivileged), Number of positives (unprivileged), Base rate, Statistical parity difference, Consistency
-* Classification metrics
-  * Error rate, Average odds difference, Average abs odds difference, Selection rate, Disparate impact, Statistical parity difference, Generalized entropy index, Theil index, Equal opportunity difference
+### Data metrics
+* Number of nagatives (privileged)
+* Number of positives (privileged)
+* Number of negatives (unprivileged)
+* Number of positives (unprivileged)
+* Base rate
+* Statistical parity difference
+* Consistency
+### Classification metrics
+* Error rate, Average odds difference
+* Average abs odds difference
+* Selection rate
+* Disparate impact
+* Statistical parity difference
+* Generalized entropy index
+* Theil index
+* Equal opportunity difference
 
 # Setup
 Supported Python Configurations:
