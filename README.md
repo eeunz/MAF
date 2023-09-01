@@ -37,7 +37,7 @@ MAF는 AIF360의 workflow를 차용했으므로, 처리 과정은 Pre/In/Post Pr
 * LearningFromFairness(Image only)
 
 ### Algorithms to add
-fair-manifold-pca
+* fair-manifold-pca
 
 
 # Supported fairness metrics
